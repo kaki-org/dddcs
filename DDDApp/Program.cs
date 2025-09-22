@@ -1,4 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿// 姓だけを表示する
+var fullName = "kakikubo teruo";
+var tokens = fullName.Split(' '); // ["kakikubo", "teruo"]
 
-var fullName = "teruo kakikubo";
-Console.WriteLine(fullName);
+var lastName = tokens[0];
+Console.WriteLine(lastName); // kakikubo が表示される
