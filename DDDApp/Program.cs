@@ -2,6 +2,11 @@
 var fullName = new FullName("teruo", "kakikubo");
 Console.WriteLine(fullName.LastName); // kakikuboが表示される
 
+// 確実に姓を表示できる
+fullName = new FullName("john", "smith");
+Console.WriteLine(fullName.LastName); // smithが表示される
+
+
 // 氏名を表現するFullNameクラス
 class FullName
 {
