@@ -1,6 +1,16 @@
-﻿// うまく姓を表示できないパターン
-var fullName = "john smith";
-var tokens = fullName.Split(' '); // ["john", "smith"]
+﻿// FullNameクラスのLastNameプロパティを利用する
+var fullName = new FullName("teruo", "kakikubo");
+Console.WriteLine(fullName.LastName); // kakikuboが表示される
 
-var lastName = tokens[0];
-Console.WriteLine(lastName); // john が表示される(姓はsmithの筈)
+// 氏名を表現するFullNameクラス
+class FullName
+{
+    public FullName(string firstName, string lastName)
+    {
+        FirstName = firstName;
+        LastName =  lastName;
+    }
+    
+    public string FirstName { get; }
+    public string LastName { get; }
+}
