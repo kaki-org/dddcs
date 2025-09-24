@@ -56,4 +56,16 @@ Console.WriteLine(modelNumber);
 // ユーザ名をルールに則って設定する
 var validUserName= new UserName("kakikubo");
 Console.WriteLine(validUserName);
-var invalidUserName = new UserName("tk"); // Exceptionを吐く
+// var invalidUserName = new UserName("tk"); // Exceptionを吐く
+
+var user = CreateUser(validUserName);
+Console.WriteLine(user);
+
+User CreateUser(UserName name)
+{
+    var user = new User();
+    // user.Id = name; // 代入でミスっていても事前にエラーとして気付ける(ソースの型 'UserName' をターゲットの型 'UserId' に変換できません)
+    user.Id = new UserId("1"); // dummy
+    user.Name = name;
+    return user;
+}
