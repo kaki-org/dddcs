@@ -6,11 +6,21 @@ Console.WriteLine(fullName.LastName); // kakikuboが表示される
 fullName = new FullName("john", "smith");
 Console.WriteLine(fullName.LastName); // smithが表示される
 
-// 値の変更をしている
+// 数字の変更
+var num = 0;
+num = 1;
+// 文字の変更
+var c = '0';
+c = 'b';
+// 文字列の変更
 var greet = "こんにちは";
 Console.WriteLine(greet); // こんにちは　が表示される
-greet = "Hello";
-Console.WriteLine(greet); // Hello が表示される
+greet = "hello";
+Console.WriteLine(greet); // hello が表示される
+// 値オブジェクトの変更
+var fullName2 = new FullName("teruo", "kakikubo");
+Console.WriteLine(fullName2); // kakiが表示される
+
 
 // 氏名を表現するFullNameクラス
 class FullName
