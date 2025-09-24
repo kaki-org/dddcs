@@ -1,11 +1,13 @@
 ﻿// FullNameクラスのLastNameプロパティを利用する
-var teruo = new FirstName("teruo");
-var kakikubo = new LastName("kakikubo");
+using System.Text.RegularExpressions;
+
+var teruo = "teruo";
+var kakikubo = "kakikubo";
 var fullName = new FullName(teruo, kakikubo, "");
 Console.WriteLine(fullName.LastName); // kakikuboが表示される
 
 // 確実に姓を表示できる
-fullName = new FullName(new FirstName("john"), new LastName("smith"), "thomas");
+fullName = new FullName("john", "smith", "thomas");
 Console.WriteLine(fullName.LastName); // smithが表示される
 
 // 数字の変更
@@ -20,8 +22,8 @@ Console.WriteLine(greet); // こんにちは　が表示される
 greet = "hello";
 Console.WriteLine(greet); // hello が表示される
 // 値オブジェクトの変更
-var fullName2 = new FullName(new FirstName("teruo"), new LastName("kakikubo"), "");
-Console.WriteLine(fullName2); // kakiが表示される
+var fullName2 = new FullName("teruo", "kakikubo", "");
+Console.WriteLine(fullName2); // kakikuboが表示される
 
 // 同じ種類の値同士の比較
 Console.WriteLine(0 == 0); // True
@@ -31,8 +33,8 @@ Console.WriteLine('a' == 'b'); // False
 Console.WriteLine("hello" == "hello"); // True
 Console.WriteLine("hello" == "こんにちは"); // False
 // 値オブジェクト同士の比較
-var nameA = new FullName(new FirstName("John"), new LastName("Smith"), "Thomas");
-var nameB = new FullName(new FirstName("John"), new LastName("Smith"), "Thomas");
+var nameA = new FullName("John", "Smith", "Thomas");
+var nameB = new FullName("John", "Smith", "Thomas");
 // 別個のインスタンス同士の比較
 Console.WriteLine("nameAとnameBのEqualsの比較" + nameA.Equals(nameB)); // Trueになる
 // 演算子のオーバーライド機能を活用することも選択肢に入る
@@ -43,24 +45,37 @@ Console.WriteLine(compareResult2);
 // 氏名を表現するFullNameクラス
 class FullName : IEquatable<FullName>
 {
-    private readonly FirstName firstName;
-    private readonly LastName lastName;
-    public string MiddleName { get; }
-    public LastName LastName => lastName;
+    private readonly string firstName;
+    private readonly string lastName;
+    private readonly string middleName;
 
-    public FullName(FirstName firstName, LastName lastName, string middleName)
+    public string FirstName => firstName;
+    public string LastName => lastName;
+    public string MiddleName => middleName;
+
+    public FullName(string firstName, string lastName, string middleName)
     {
+        if (firstName == null) throw new ArgumentNullException(nameof(firstName));
+        if (lastName == null) throw new ArgumentNullException(nameof(lastName));
+        if (!ValidateName(firstName)) throw new ArgumentException("許可されていない文字が使われています。", nameof(firstName));
+        if (!ValidateName(lastName)) throw new ArgumentException("許可されていない文字が使われています。", nameof(lastName));
         this.firstName = firstName;
         this.lastName = lastName;
-        MiddleName = middleName;
+        this.middleName = middleName;
+    }
+
+    private bool ValidateName(string value)
+    {
+        // アルファベットに限定する
+        return Regex.IsMatch(value, @"^[a-zA-Z]+$");
     }
 
     public bool Equals(FullName other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
-        return this.firstName.Equals(other.firstName) && lastName.Equals(other.lastName) &&
-               string.Equals(MiddleName, other.MiddleName);
+        return firstName.Equals(other.firstName) && lastName.Equals(other.lastName) &&
+               string.Equals(middleName, other.middleName);
     }
 
     public override bool Equals(object obj)
@@ -79,67 +94,5 @@ class FullName : IEquatable<FullName>
             return ((firstName != null ? firstName.GetHashCode() : 0) * 397) ^
                    (lastName != null ? lastName.GetHashCode() : 0);
         }
-    }
-}
-
-class FirstName
-{
-    private readonly string value;
-
-    public FirstName(string value)
-    {
-        if (string.IsNullOrEmpty(value)) throw new ArgumentException("1文字以上である必要があります。", nameof(value));
-        this.value = value;
-    }
-
-    public override string ToString() => value;
-
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
-        return Equals((FirstName)obj);
-    }
-
-    protected bool Equals(FirstName other)
-    {
-        return string.Equals(value, other.value);
-    }
-
-    public override int GetHashCode()
-    {
-        return value != null ? value.GetHashCode() : 0;
-    }
-}
-
-class LastName
-{
-    private readonly string value;
-
-    public LastName(string value)
-    {
-        if (string.IsNullOrEmpty(value)) throw new ArgumentException("1文字以上である必要があります", nameof(value));
-        this.value = value;
-    }
-
-    public override string ToString() => value;
-
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
-        return Equals((LastName)obj);
-    }
-
-    protected bool Equals(LastName other)
-    {
-        return string.Equals(value, other.value);
-    }
-
-    public override int GetHashCode()
-    {
-        return value != null ? value.GetHashCode() : 0;
     }
 }
