@@ -41,4 +41,7 @@ Console.WriteLine(compareResult2);
 var myMoney = new Money(1000, "JPY");
 var allowance = new Money(3000, "JPY");
 Console.WriteLine(myMoney.Add(allowance));
-
+// プリミティブな値同士の計算
+var myMoneyP = 1000m;
+var allowanceP = 3000m;
+Console.WriteLine(myMoneyP + allowanceP);
