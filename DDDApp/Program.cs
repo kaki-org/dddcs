@@ -52,3 +52,8 @@ Console.WriteLine(myMoneyP + allowanceP);
 // 製品番号を格納して出力してみる
 var modelNumber = new ModelNumber("a20421", "100", "1");
 Console.WriteLine(modelNumber);
+
+// ユーザ名をルールに則って設定する
+var validUserName= new UserName("kakikubo");
+Console.WriteLine(validUserName);
+var invalidUserName = new UserName("tk"); // Exceptionを吐く
