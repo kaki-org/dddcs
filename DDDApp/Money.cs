@@ -1,5 +1,3 @@
-namespace DDDApp;
-
 class Money
 {
   private readonly decimal amount;
@@ -10,5 +8,18 @@ class Money
     if (currency == null) throw new ArgumentNullException(nameof(currency));
     this.amount = amount;
     this.currency = currency;
+  }
+
+  public Money Add(Money arg)
+  {
+    if (arg == null) throw new ArgumentNullException(nameof(arg));
+    if (currency != arg.currency) throw new ArgumentException($"通貨単位が異なります (this:{currency}, arg:{arg.currency})");
+
+    return new Money(amount + arg.amount, currency);
+  }
+
+  public override string ToString()
+  {
+    return $"{amount} {currency}";
   }
 }
