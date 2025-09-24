@@ -45,3 +45,10 @@ Console.WriteLine(myMoney.Add(allowance));
 var myMoneyP = 1000m;
 var allowanceP = 3000m;
 Console.WriteLine(myMoneyP + allowanceP);
+// 異なる通貨単位では例外を送出
+// var usd = new Money(10, "USD");
+// Console.WriteLine(usd.Add(allowance));
+
+// 製品番号を格納して出力してみる
+var modelNumber = new ModelNumber("a20421", "100", "1");
+Console.WriteLine(modelNumber);
