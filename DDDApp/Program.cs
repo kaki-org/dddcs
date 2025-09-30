@@ -60,10 +60,12 @@ Console.WriteLine(validUserName);
 
 var user = CreateUser(validUserName);
 Console.WriteLine(user);
+user.ChangeName("kay");
+Console.WriteLine(user);
 
 User CreateUser(UserName name)
 {
-    var user = new User();
+    var user = new User("kakikubo");
     // user.Id = name; // 代入でミスっていても事前にエラーとして気付ける(ソースの型 'UserName' をターゲットの型 'UserId' に変換できません)
     user.Id = new UserId("1"); // dummy
     user.Name = name;
