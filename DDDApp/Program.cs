@@ -62,6 +62,9 @@ var user = CreateUser(validUserName);
 Console.WriteLine(user);
 user.ChangeUserName(new UserId("1"),"kay");
 Console.WriteLine(user);
+var user2 = CreateUser(validUserName);
+
+Check(user, user2);
 
 User CreateUser(UserName name)
 {
@@ -70,4 +73,16 @@ User CreateUser(UserName name)
     user.Id = new UserId("1"); // dummy
     user.Name = name;
     return user;
+}
+
+void Check(User leftUser, User rightUser)
+{
+    if (leftUser.Equals(rightUser))
+    {
+        Console.WriteLine("同一のユーザです");
+    }
+    else
+    {
+        Console.WriteLine("別のユーザです");
+    }
 }
