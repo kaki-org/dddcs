@@ -1,4 +1,4 @@
-class UserId
+public class UserId
 {
     public UserId(string value)
     {
