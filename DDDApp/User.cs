@@ -1,10 +1,12 @@
 public class User
 {
-    public User(UserName name)
+    public User(UserId id, UserName name)
     {
+        if (id== null)  throw new ArgumentNullException(nameof(id));
         if (name == null)  throw new ArgumentNullException(nameof(name));
 
-        Id = new UserId(Guid.NewGuid().ToString());
+        // Id = new UserId(Guid.NewGuid().ToString());
+        Id = id;
         Name = name;
     }
 
