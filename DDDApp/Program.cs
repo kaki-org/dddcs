@@ -56,33 +56,32 @@ Console.WriteLine(modelNumber);
 // ユーザ名をルールに則って設定する
 var validUserName= new UserName("kakikubo");
 Console.WriteLine(validUserName);
-// var invalidUserName = new UserName("tk"); // Exceptionを吐く
+var invalidUserName = new UserName("tk"); // Exceptionを吐く
 
-var user = CreateUser(validUserName);
-Console.WriteLine(user);
-user.ChangeUserName(new UserId("1"),"kay");
-Console.WriteLine(user);
-var user2 = CreateUser(validUserName);
 
-Check(user, user2);
-
-User CreateUser(UserName name)
+// ユーザ作成処理
+partial class Program
 {
-    var user = new User(new UserId("1"), "kakikubo");
-    // user.Id = name; // 代入でミスっていても事前にエラーとして気付ける(ソースの型 'UserName' をターゲットの型 'UserId' に変換できません)
-    user.Id = new UserId("1"); // dummy
-    user.Name = name;
-    return user;
-}
+    public void CreateUser(string userName)
+    {
+        var user = new User(
+            new UserName(userName)
+        );
+        var userService = new UserService();
+        if (userService.Exists(user))
+        {
+            throw new Exception($"{userName}は既に存在しています");
+        }
 
-void Check(User leftUser, User rightUser)
-{
-    if (leftUser.Equals(rightUser))
-    {
-        Console.WriteLine("同一のユーザです");
-    }
-    else
-    {
-        Console.WriteLine("別のユーザです");
+        var connectionString = ConfigurationManager.ConnectionStrings["FooConnection"].ConnectionString;
+        using (var connection = new SqlConnection(connectionString));
+        using (var command = connection.CreateCommand())
+        {
+            connection.Open();
+            command.CommandText = "INSERT INTO users (id, name) VALUES(@id, @name)";
+            command.Parameters.Add(new SqlParameter("@id", user.Id.Value));
+            command.Parameters.Add(new SqlParameter("@name", user.Name.Value));
+            command.ExecuteNonQuery();
+        }
     }
 }
