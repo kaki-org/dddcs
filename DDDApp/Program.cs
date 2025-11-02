@@ -59,29 +59,34 @@ Console.WriteLine(validUserName);
 var invalidUserName = new UserName("tk"); // Exceptionを吐く
 
 
+// リポジトリをProgramクラスに引き渡す
+var userRepository = new UserRepository();
+var program = new Program(userRepository);
+program.CreateUser("kakikubo");
+
 // ユーザ作成処理
 partial class Program
 {
+    private IUserRepository userRepository;
+
+    public Program(IUserRepository userRepository)
+    {
+        this.userRepository = userRepository;
+    }
+    
     public void CreateUser(string userName)
     {
         var user = new User(
+            new UserId(Guid.NewGuid().ToString()), 
             new UserName(userName)
         );
-        var userService = new UserService();
+        
+        var userService = new UserService(userRepository);
         if (userService.Exists(user))
         {
             throw new Exception($"{userName}は既に存在しています");
         }
-
-        var connectionString = ConfigurationManager.ConnectionStrings["FooConnection"].ConnectionString;
-        using (var connection = new SqlConnection(connectionString));
-        using (var command = connection.CreateCommand())
-        {
-            connection.Open();
-            command.CommandText = "INSERT INTO users (id, name) VALUES(@id, @name)";
-            command.Parameters.Add(new SqlParameter("@id", user.Id.Value));
-            command.Parameters.Add(new SqlParameter("@name", user.Name.Value));
-            command.ExecuteNonQuery();
-        }
+        
+        userRepository.Save(user);
     }
 }
