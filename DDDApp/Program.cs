@@ -1,4 +1,8 @@
 ﻿// FullNameクラスのLastNameプロパティを利用する
+
+using Microsoft.Identity.Client;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 var fullName = new FullName("teruo", "kakikubo", "");
 Console.WriteLine(fullName.LastName); // kakikuboが表示される
 
@@ -56,13 +60,22 @@ Console.WriteLine(modelNumber);
 // ユーザ名をルールに則って設定する
 var validUserName= new UserName("kakikubo");
 Console.WriteLine(validUserName);
-var invalidUserName = new UserName("tk"); // Exceptionを吐く
+// var invalidUserName = new UserName("tk"); // Exceptionを吐く
 
 
 // リポジトリをProgramクラスに引き渡す
-var userRepository = new UserRepository();
+// var userRepository = new UserRepository();
+// var program = new Program(userRepository);
+// program.CreateUser("kakikubo");
+
+// ユーザ作成処理をテストする
+var userRepository = new InMemoryUserRepository();
 var program = new Program(userRepository);
-program.CreateUser("kakikubo");
+program.CreateUser("kkkb");
+
+// データを取り出して確認
+var head = userRepository.Store.Values.First();
+Assert.AreEqual("kkkb", head.Name.Value);
 
 // ユーザ作成処理
 partial class Program
@@ -90,3 +103,4 @@ partial class Program
         userRepository.Save(user);
     }
 }
+
