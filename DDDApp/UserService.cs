@@ -1,6 +1,6 @@
 public class UserService
 {
-    private IUserRepository userRepository;
+    private readonly IUserRepository userRepository;
 
     public UserService(IUserRepository userRepository)
     {
@@ -10,10 +10,9 @@ public class UserService
     public bool Exists(User user)
     {
         // ユーザ名により重複確認を行うという知識は失われている
-        // return userRepository.Exists(user);
-        var found = userRepository.Find(user.Name);
+        var duplicatedUser = userRepository.Find(user.Name);
         
-        return found != null;
+        return duplicatedUser != null;
     }
     
 }
