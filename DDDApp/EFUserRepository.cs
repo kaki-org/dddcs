@@ -45,7 +45,7 @@ public class EFUserRepository : IUserRepository
 
     private User ToModel(UserDataModel from)
     {
-        return new User(new UserId(from.Id), new UserName(from.Name));
+        return new User(new UserName(from.Name));
     }
 
     private UserDataModel Transfer(User from, UserDataModel model)
