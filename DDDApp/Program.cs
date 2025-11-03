@@ -2,6 +2,7 @@
 
 using Microsoft.Identity.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.EntityFrameworkCore;
 
 var fullName = new FullName("teruo", "kakikubo", "");
 Console.WriteLine(fullName.LastName); // kakikuboが表示される
@@ -69,13 +70,26 @@ Console.WriteLine(validUserName);
 // program.CreateUser("kakikubo");
 
 // ユーザ作成処理をテストする
-var userRepository = new InMemoryUserRepository();
-var program = new Program(userRepository);
-program.CreateUser("kkkb");
+// var userRepository = new InMemoryUserRepository();
+// var program = new Program(userRepository);
+// program.CreateUser("kkkb");
 
 // データを取り出して確認
-var head = userRepository.Store.Values.First();
-Assert.AreEqual("kkkb", head.Name.Value);
+// var head = userRepository.Store.Values.First();
+// Assert.AreEqual("kkkb", head.Name.Value);
+
+// EntiryFrameworkを利用したリポジトリをつかったテスト
+var options = new DbContextOptionsBuilder<MyDbContext>()
+    .UseInMemoryDatabase(databaseName: "TestDatabase")
+    .Options;
+var myContext = new MyDbContext(options);
+var userRepository = new EFUserRepository(myContext);
+var program = new Program(userRepository);
+program.CreateUser("kakikubo");
+
+// データを取り出して確認
+var head = myContext.Users.First();
+Assert.AreEqual("kakikubo", head.Name);
 
 // ユーザ作成処理
 partial class Program
