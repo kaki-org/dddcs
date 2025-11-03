@@ -1,6 +1,7 @@
 public interface IUserRepository
 {
-    void Save(User user);
+    User Find(UserId id);
     User Find(UserName name);
-    public bool Exists(UserName name);
+    void Save(User user);
+    void Delete(User user);
 }

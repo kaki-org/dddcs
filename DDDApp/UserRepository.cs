@@ -58,5 +58,45 @@ MERGE INTO users
         }
     }
 
+    public User Find(UserId userId)
+    {
+        using (var connection = new SqlConnection(connectionString))
+        using (var command = connection.CreateCommand())
+        {
+            connection.Open();
+            command.CommandText = "SELECT * FROM users WHERE id = @id";
+            command.Parameters.Add(new SqlParameter("@id", userId.Value));
+            using (var reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    var id = reader["id"] as string;
+                    var name = reader["name"] as string;
+
+                    return new User(
+                        new UserId(id),
+                        new UserName(name)
+                    );
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+    }
+
+    public void Delete(User user)
+    {
+        using (var connection = new SqlConnection(connectionString))
+        using (var command = connection.CreateCommand())
+        {
+            connection.Open();
+            command.CommandText = "DELETE FROM users WHERE id = @id";
+            command.Parameters.Add(new SqlParameter("@id", user.Id.Value));
+            command.ExecuteNonQuery();
+        }
+    }
+
     public bool Exists(UserName name) => Find(name) != null;
 }

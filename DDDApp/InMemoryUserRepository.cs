@@ -19,10 +19,28 @@ public class InMemoryUserRepository : IUserRepository
         }
     }
 
+    public User Find(UserId userId)
+    {
+        var target = Store.Values.FirstOrDefault(user => user.Id.Equals(userId));
+        if (target != null)
+        {
+            return Clone(target);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public void Save(User user)
     {
         // 保存時もディープコピーを行う
         Store[user.Id] = Clone(user);
+    }
+
+    public void Delete(User user)
+    {
+        Store.Remove(user.Id);
     }
     
     // ディープコピーを行うメソッド
@@ -31,9 +49,4 @@ public class InMemoryUserRepository : IUserRepository
         return new User(user.Id, user.Name);
     }
 
-    // 仮実装
-    public bool Exists(UserName userName)
-    {
-        return Store.Values.FirstOrDefault(user => user.Name.Equals(userName)) != null;
-    }
 }

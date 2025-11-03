@@ -20,6 +20,16 @@ public class EFUserRepository : IUserRepository
         return ToModel(target);
     }
 
+    public User Find(UserId id)
+    {
+        var target = context.Users.FirstOrDefault(userData => userData.Id == id.Value);
+        if (target == null)
+        {
+            return null;
+        }
+        return ToModel(target);
+    }
+
     public bool Exists(UserName name)
     {
         return context.Users.Any(userData => userData.Name == name.Value);
@@ -41,6 +51,16 @@ public class EFUserRepository : IUserRepository
         }
 
         context.SaveChanges();
+    }
+
+    public void Delete(User user)
+    {
+        var found = context.Users.Find(user.Id.Value);
+        if (found != null)
+        {
+            context.Users.Remove(found);
+            context.SaveChanges();
+        }
     }
 
     private User ToModel(UserDataModel from)
