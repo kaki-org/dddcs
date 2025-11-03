@@ -1,3 +1,5 @@
+using System.Linq;
+
 public class EFUserRepository : IUserRepository
 {
     private readonly MyDbContext context;
@@ -16,6 +18,11 @@ public class EFUserRepository : IUserRepository
         }
 
         return ToModel(target);
+    }
+
+    public bool Exists(UserName name)
+    {
+        return context.Users.Any(userData => userData.Name == name.Value);
     }
 
     public void Save(User user)
