@@ -1,15 +1,15 @@
 public class UserUpdateCommand
 {
-    public UserUpdateCommand(string id)
+    public UserUpdateCommand(string id, string name = null, string mailAddress = null)
     {
         Id = id;
+        Name = name;
+        MailAddress = mailAddress;
     }
 
     public string Id { get; }
-    /// <summary> データが設定されると変更される </summary>
-    public string Name { get; set; }
-    /// <summary> データが設定されると変更される </summary>
-    public string MailAddress { get; set; }
+    public string Name { get; } // セッターなし
+    public string MailAddress { get; } // セッターなし
 
     
 }
