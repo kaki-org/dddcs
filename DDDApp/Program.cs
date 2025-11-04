@@ -91,6 +91,21 @@ program.CreateUser("kakikubo");
 var head = myContext.Users.First();
 Assert.AreEqual("kakikubo", head.Name);
 
+var userService = new UserService(userRepository);
+var userApplicationService = new UserApplicationService(userRepository, userService);
+// ユーザ名変更だけを行うように
+var updateNameCommand = new UserUpdateCommand(head.Id)
+{
+    Name = "kkkb"
+};
+userApplicationService.Update(updateNameCommand);
+
+// メールアドレス変更だけを行うように
+var updateMailAddressCommand = new UserUpdateCommand(head.Id)
+{
+    MailAddress = "kakikubo@example.com"
+};
+userApplicationService.Update(updateMailAddressCommand);
 // ユーザ作成処理
 partial class Program
 {
