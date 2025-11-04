@@ -35,9 +35,9 @@ public class UserApplicationService
         return new UserData(user);
     }
 
-    public void Update(string userId, string name = null, string mailAddress = null)
+    public void Update(UserUpdateCommand command)
     {
-        var targetId = new UserId(userId);
+        var targetId = new UserId(command.Id);
         var user = userRepository.Find(targetId);
 
         if (user == null)
@@ -45,6 +45,7 @@ public class UserApplicationService
             throw new UserNotFoundException(targetId);
         }
 
+        var name = command.Name;
         // メールアドレスだけを更新するため、ユーザ名が指定されないことを考慮
         if (name != null)
         {
@@ -56,6 +57,7 @@ public class UserApplicationService
             }
         }
 
+        var mailAddress = command.MailAddress;
         // メールアドレスを更新できるように
         if (mailAddress != null)
         {
