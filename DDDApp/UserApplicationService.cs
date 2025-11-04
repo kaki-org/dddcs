@@ -35,7 +35,7 @@ public class UserApplicationService
         return new UserData(user);
     }
 
-    public void Update(string userId, string name)
+    public void Update(string userId, string name = null, string mailAddress = null)
     {
         var targetId = new UserId(userId);
         var user = userRepository.Find(targetId);
@@ -45,11 +45,22 @@ public class UserApplicationService
             throw new UserNotFoundException(targetId);
         }
 
-        var newUserName = new UserName(name);
-        user.ChangeName(newUserName);
-        if (userService.Exists(user))
+        // メールアドレスだけを更新するため、ユーザ名が指定されないことを考慮
+        if (name != null)
         {
-            throw new CanNotRegisterUserException(user, "ユーザはすでに存在しています。");
+            var newUserName = new UserName(name);
+            user.ChangeName(newUserName);
+            if (userService.Exists(user))
+            {
+                throw new CanNotRegisterUserException(user, "ユーザは既に存在しています");
+            }
+        }
+
+        // メールアドレスを更新できるように
+        if (mailAddress != null)
+        {
+            var newMailAddress = new MailAddress(mailAddress);
+            user.ChangeMailAddress(newMailAddress);
         }
 
         userRepository.Save(user);
