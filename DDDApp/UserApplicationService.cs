@@ -21,5 +21,38 @@ public class UserApplicationService
 
         userRepository.Save(user);
     }
+
+    public UserData Get(string userId)
+    {
+        var targetId = new UserId(userId);
+        var user = userRepository.Find(targetId);
+
+        if (user == null)
+        {
+            return null;
+        }
+
+        return new UserData(user);
+    }
+
+    public void Update(string userId, string name)
+    {
+        var targetId = new UserId(userId);
+        var user = userRepository.Find(targetId);
+
+        if (user == null)
+        {
+            throw new UserNotFoundException(targetId);
+        }
+
+        var newUserName = new UserName(name);
+        user.ChangeName(newUserName);
+        if (userService.Exists(user))
+        {
+            throw new CanNotRegisterUserException(user, "ユーザはすでに存在しています。");
+        }
+
+        userRepository.Save(user);
+    }
     
 }

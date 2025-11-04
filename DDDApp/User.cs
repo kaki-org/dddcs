@@ -1,3 +1,5 @@
+using System.Net.Mail;
+
 public class User
 {
     public User(UserName name)
@@ -21,6 +23,7 @@ public class User
 
     public UserId Id { get; }
     public UserName Name { get; private set; }
+    public MailAddress MailAddress { get;  }
 
     public void ChangeName(UserName name)
     {
