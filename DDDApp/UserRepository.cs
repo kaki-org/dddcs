@@ -1,4 +1,5 @@
 using System.Configuration;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Data.SqlClient;
 
 
@@ -49,6 +50,31 @@ MERGE INTO users
                         new UserId(id),
                         new UserName(name)
                     );
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+    }
+
+    public User Find(MailAddress mailAddress)
+    {
+        using (var connection = new SqlConnection(connectionString))
+        using (var command = connection.CreateCommand())
+        {
+            connection.Open();
+            command.CommandText = "SELECT * FROM users WHERE email = @email";
+            command.Parameters.Add(new SqlParameter("@email", mailAddress.ToString()));
+            using (var reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    var id = reader["id"] as string;
+                    var name = reader["name"] as string;
+
+                    return new User(new UserId(id), new UserName(name), new MailAddress(mailAddress.ToString()));
                 }
                 else
                 {

@@ -10,7 +10,10 @@ public class UserService
     public bool Exists(User user)
     {
         // ユーザ名により重複確認を行うという知識は失われている
-        var duplicatedUser = userRepository.Find(user.Name);
+        // var duplicatedUser = userRepository.Find(user.Name);
+
+        // 重複のルールをユーザ名からメールアドレスに変更
+        var duplicatedUser = userRepository.Find(user.MailAddress);
         
         return duplicatedUser != null;
     }

@@ -10,4 +10,5 @@ public class UserDataModel
     [Required]
     [MinLength(3)]
     public string Name { get; set; }
+    public string MailAddress { get; set; }
 }

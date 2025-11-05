@@ -9,11 +9,14 @@ public class UserApplicationService
         this.userService = userService;
     }
 
-    public void Register(string name)
+    public void Register(string name, string mailAddress)
     {
         var user = new User(
-            new UserName(name)
+            new UserName(name),
+            new MailAddress(mailAddress)
         );
+
+        // ドメインサービスを利用して重複を確認する
         if (userService.Exists(user))
         {
             throw new CanNotRegisterUserException(user, "ユーザは既に存在しています。");

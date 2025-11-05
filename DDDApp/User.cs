@@ -20,6 +20,24 @@ public class User
         Name = name;
     }
 
+    public User(UserName name, MailAddress mailAddress)
+    {
+        if (name == null) throw new ArgumentNullException(nameof(name));
+        if (mailAddress == null) throw new ArgumentNullException(nameof(mailAddress));
+        Id = new UserId(Guid.NewGuid().ToString());
+        Name = name;
+        MailAddress = mailAddress;
+    }
+
+    public User(UserId id, UserName name, MailAddress mailAddress)
+    {
+        if (id == null) throw new ArgumentNullException(nameof(id));
+        if (name == null) throw new ArgumentNullException(nameof(name));
+        Id = id;
+        Name = name;
+        MailAddress = mailAddress;
+    }
+
 
     public UserId Id { get; }
     public UserName Name { get; private set; }

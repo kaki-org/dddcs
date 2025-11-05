@@ -30,6 +30,16 @@ public class EFUserRepository : IUserRepository
         return ToModel(target);
     }
 
+    public User Find(MailAddress mail)
+    {
+        var target = context.Users.FirstOrDefault(userData => userData.MailAddress == mail.Value);
+        if (target == null)
+        {
+            return null;
+        }
+        return ToModel(target);
+    }
+
     public bool Exists(UserName name)
     {
         return context.Users.Any(userData => userData.Name == name.Value);
