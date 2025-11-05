@@ -106,6 +106,13 @@ var updateMailAddressCommand = new UserUpdateCommand(head.Id)
     MailAddress = "kakikubo@example.com"
 };
 userApplicationService.Update(updateMailAddressCommand);
+
+
+// ユーザ登録処理でインターフェースを利用
+var userRegisterService = new UserRegisterService(userRepository, userService);
+var command = new UserRegisterCommand("teruo");
+userRegisterService.Handle(command);
+
 // ユーザ作成処理
 partial class Program
 {
@@ -120,7 +127,8 @@ partial class Program
     {
         var user = new User(
             new UserId(Guid.NewGuid().ToString()), 
-            new UserName(userName)
+            new UserName(userName),
+            new MailAddress("dummy@example.com")
         );
         
         var userService = new UserService(userRepository);

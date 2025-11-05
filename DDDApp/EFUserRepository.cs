@@ -75,13 +75,18 @@ public class EFUserRepository : IUserRepository
 
     private User ToModel(UserDataModel from)
     {
-        return new User(new UserName(from.Name));
+        return new User(
+            new UserId(from.Id),
+            new UserName(from.Name),
+            new MailAddress(from.MailAddress)
+        );
     }
 
     private UserDataModel Transfer(User from, UserDataModel model)
     {
         model.Id = from.Id.Value;
         model.Name = from.Name.Value;
+        model.MailAddress = from.MailAddress.Value;
 
         return model;
     }
@@ -92,6 +97,7 @@ public class EFUserRepository : IUserRepository
         {
             Id = from.Id.Value,
             Name = from.Name.Value,
+            MailAddress = from.MailAddress.Value,
         };
     }
     

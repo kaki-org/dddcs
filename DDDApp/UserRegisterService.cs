@@ -12,16 +12,18 @@ public class UserRegisterService
     public void Handle(UserRegisterCommand command)
     {
         var userName = new UserName(command.Name);
+        var mailAddress = new MailAddress("dummy@example.com"); // デフォルトのメールアドレス
 
         var user = new User(
-            userName
+            userName,
+            mailAddress
         );
 
         if (userService.Exists(user))
         {
             throw new CanNotRegisterUserException(user, "ユーザは既に存在しています。");
         }
-        
+
         userRepository.Save(user);
     }
 }

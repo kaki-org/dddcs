@@ -14,8 +14,9 @@ public class UserService
 
         // 重複のルールをユーザ名からメールアドレスに変更
         var duplicatedUser = userRepository.Find(user.MailAddress);
-        
-        return duplicatedUser != null;
+
+        // 自分自身を除外して重複チェック
+        return duplicatedUser != null && duplicatedUser.Id.Value != user.Id.Value;
     }
     
 }

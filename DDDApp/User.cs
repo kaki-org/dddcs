@@ -33,6 +33,7 @@ public class User
     {
         if (id == null) throw new ArgumentNullException(nameof(id));
         if (name == null) throw new ArgumentNullException(nameof(name));
+        if (mailAddress == null) throw new ArgumentNullException(nameof(mailAddress));
         Id = id;
         Name = name;
         MailAddress = mailAddress;
