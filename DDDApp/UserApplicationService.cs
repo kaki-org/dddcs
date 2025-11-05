@@ -9,22 +9,6 @@ public class UserApplicationService
         this.userService = userService;
     }
 
-    public void Register(string name, string mailAddress)
-    {
-        var user = new User(
-            new UserName(name),
-            new MailAddress(mailAddress)
-        );
-
-        // ドメインサービスを利用して重複を確認する
-        if (userService.Exists(user))
-        {
-            throw new CanNotRegisterUserException(user, "ユーザは既に存在しています。");
-        }
-
-        userRepository.Save(user);
-    }
-
     public UserData Get(string userId)
     {
         var targetId = new UserId(userId);
@@ -70,19 +54,4 @@ public class UserApplicationService
 
         userRepository.Save(user);
     }
-
-    public void Delete(UserDeleteCommand command)
-    {
-        var targetId = new UserId(command.Id);
-        var user = userRepository.Find(targetId);
-
-        if (user == null)
-        {
-            throw new UserNotFoundException(targetId);
-            // return null; // 対象がみつからなかったため退会成功とする
-        }
-
-        userRepository.Delete(user);
-    }
-    
 }
