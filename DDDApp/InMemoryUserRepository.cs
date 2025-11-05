@@ -32,6 +32,19 @@ public class InMemoryUserRepository : IUserRepository
         }
     }
 
+    public User Find(MailAddress mailAddress)
+    {
+        var target = Store.Values.FirstOrDefault(user => user.MailAddress.Equals(mailAddress));
+        if (target != null)
+        {
+            return Clone(target);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public void Save(User user)
     {
         // 保存時もディープコピーを行う
