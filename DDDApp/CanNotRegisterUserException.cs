@@ -2,15 +2,17 @@ using System;
 
 public class CanNotRegisterUserException : Exception
 {
-    public User User { get; }
-
     public CanNotRegisterUserException(User user, string message) : base(message)
     {
-        User = user;
+        Id = user?.Id?.Value;
+        Name = user?.Name?.Value;
     }
 
-    public CanNotRegisterUserException(User user, string message, Exception innerException) : base(message, innerException)
+    public CanNotRegisterUserException(UserName name, string message) : base(message)
     {
-        User = user;
+        Name = name?.Value;
     }
+
+    public string Id { get; }
+    public string Name { get; }
 }
