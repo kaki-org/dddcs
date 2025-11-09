@@ -1,4 +1,4 @@
-public class UserRegisterService
+public class UserRegisterService : IUserRegisterService
 {
     private readonly IUserRepository userRepository;
     private readonly UserService userService;
@@ -12,7 +12,7 @@ public class UserRegisterService
     public void Handle(UserRegisterCommand command)
     {
         var userName = new UserName(command.Name);
-        var mailAddress = new MailAddress("dummy@example.com"); // デフォルトのメールアドレス
+        var mailAddress = new MailAddress($"{command.Name}@example.com"); // ユーザ名ベースのメールアドレス
 
         var user = new User(
             userName,

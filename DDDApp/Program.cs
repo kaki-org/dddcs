@@ -113,6 +113,14 @@ var userRegisterService = new UserRegisterService(userRepository, userService);
 var command = new UserRegisterCommand("teruo");
 userRegisterService.Handle(command);
 
+// clientを利用する
+var client = new Client(userRegisterService);
+client.Register("kkkb2");
+
+// わざとExceptionを起こすExceptionUserRegisterServiceを利用する
+var exceptionUserRegisterServcie = new ExceptionUserRegisterService();
+var exceptionClient = new Client(exceptionUserRegisterServcie);
+exceptionClient.Register("kkkb3"); // throwされる
 // ユーザ作成処理
 partial class Program
 {
@@ -126,9 +134,9 @@ partial class Program
     public void CreateUser(string userName)
     {
         var user = new User(
-            new UserId(Guid.NewGuid().ToString()), 
+            new UserId(Guid.NewGuid().ToString()),
             new UserName(userName),
-            new MailAddress("dummy@example.com")
+            new MailAddress("program@example.com")
         );
         
         var userService = new UserService(userRepository);
@@ -141,3 +149,17 @@ partial class Program
     }
 }
 
+public class Client
+{
+    private IUserRegisterService userRegisterService;
+    public Client(IUserRegisterService userRegisterService)
+    {
+        this.userRegisterService = userRegisterService;
+    }
+
+    public void Register(string name)
+    {
+        var command = new UserRegisterCommand(name);
+        userRegisterService.Handle(command);
+    }
+}
