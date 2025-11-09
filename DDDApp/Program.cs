@@ -121,6 +121,12 @@ client.Register("kkkb2");
 var exceptionUserRegisterServcie = new ExceptionUserRegisterService();
 var exceptionClient = new Client(exceptionUserRegisterServcie);
 exceptionClient.Register("kkkb3"); // throwされる
+
+// ServiceLocatorを利用する
+ServiceLocator.Register<IUserRegisterService, InMemoryUserRepository>();
+// 変更したいときは以下のようにする
+// ServiceLocator.Register<IUserRegisterService, UserRepository>();
+
 // ユーザ作成処理
 partial class Program
 {
