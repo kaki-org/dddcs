@@ -4,6 +4,7 @@ using Microsoft.Identity.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 var fullName = new FullName("teruo", "kakikubo", "");
 Console.WriteLine(fullName.LastName); // kakikuboが表示される
@@ -123,24 +124,32 @@ var exceptionUserRegisterServcie = new ExceptionUserRegisterService();
 var exceptionClient = new Client(exceptionUserRegisterServcie);
 exceptionClient.Register("kkkb3"); // throwされる
 
-static void Main(string[] args)
-{
-    // IoC Container
-    var serviceCollection = new ServiceCollection();
-    // 依存関係の設定を登録する
-    serviceCollection.AddTransient<IUserRepository, InMemoryUserRepository>();
-    serviceCollection.AddTransient<UserApplicationService>();
-
-    // インスタンスはIoC Container経由で取得する
-    var provider = serviceCollection.BuildServiceProvider();
-    var userApplicationService = provider.GetService<UserApplicationService>();
-
-
-}
 // ユーザ作成処理
 partial class Program
 {
     private IUserRepository userRepository;
+    private static ServiceProvider serviceProvider;
+
+    public static void Main(string[] args)
+    {
+        StartUp();
+    }
+
+    public static void StartUp()
+    {
+        // IoC Container
+        var serviceCollection = new ServiceCollection();
+        // 依存関係の登録を行う(以下コメントにて補足)
+        // IUserRepositoryが要求されたらInMemoryUserRepositoryを生成して引き渡す(生成したインスタンスはその後使い回される)
+        serviceCollection.AddSingleton<IUserRepository, InMemoryUserRepository>();
+        // UserServiceが要求されたら都度UserServiceを生成して引き渡す
+        serviceCollection.AddTransient<UserService>();
+        // UserApplicationServiceが要求されたら都度UserApplicationServiceを生成して引き渡す
+        serviceCollection.AddTransient<UserApplicationService>();
+        // 依存解決を行うプロバイダの生成
+        // プログラムはserviceProviderに依存の解決を依頼する
+        serviceProvider =  serviceCollection.BuildServiceProvider();
+    }
 
     public Program(IUserRepository userRepository)
     {
