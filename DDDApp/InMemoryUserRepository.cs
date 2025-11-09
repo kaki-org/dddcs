@@ -59,7 +59,7 @@ public class InMemoryUserRepository : IUserRepository
     // ディープコピーを行うメソッド
     private User Clone(User user)
     {
-        return new User(user.Id, user.Name);
+        return new User(user.Id, user.Name, user.MailAddress);
     }
 
 }

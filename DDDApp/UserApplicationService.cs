@@ -5,8 +5,7 @@ public class UserApplicationService
 
     public UserApplicationService(IUserRepository userRepository, UserService userService)
     {
-        // ServiceLocator経由でインスタンスを取得する
-        this.userRepository = ServiceLocator.Resolve<IUserRepository>();
+        this.userRepository = userRepository;
         this.userService = userService;
     }
 

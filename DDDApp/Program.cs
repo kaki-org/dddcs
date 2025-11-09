@@ -5,7 +5,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using static Program;
 
+// テストコード（コメントアウト）
+/*
 var fullName = new FullName("teruo", "kakikubo", "");
 Console.WriteLine(fullName.LastName); // kakikuboが表示される
 
@@ -122,7 +125,11 @@ client.Register("kkkb2");
 // わざとExceptionを起こすExceptionUserRegisterServiceを利用する
 var exceptionUserRegisterServcie = new ExceptionUserRegisterService();
 var exceptionClient = new Client(exceptionUserRegisterServcie);
-exceptionClient.Register("kkkb3"); // throwされる
+// exceptionClient.Register("kkkb3"); // throwされる
+*/
+
+// Mainメソッドを呼び出してユーザー入力を開始
+Program.Main(args);
 
 // ユーザ作成処理
 partial class Program
@@ -133,6 +140,39 @@ partial class Program
     public static void Main(string[] args)
     {
         StartUp();
+
+        while (true)
+        {
+            Console.WriteLine("Input user name");
+            Console.Write(">");
+            var input = Console.ReadLine();
+
+            // null check for input
+            if (string.IsNullOrEmpty(input))
+            {
+                Console.WriteLine("Invalid input. Please try again.");
+                continue;
+            }
+
+            var userRegisterService= serviceProvider.GetService<UserRegisterService>();
+            var command = new UserRegisterCommand(input);
+            userRegisterService.Handle(command);
+
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("user created:");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("user name:");
+            Console.WriteLine("- " + input);
+            Console.WriteLine("--------------------------------------------");
+
+            Console.WriteLine("continue? (y/n)");
+            Console.Write(">");
+            var yesOrNo = Console.ReadLine();
+            if (yesOrNo == "n")
+            {
+                break;
+            }
+        }
     }
 
     public static void StartUp()
@@ -141,9 +181,12 @@ partial class Program
         var serviceCollection = new ServiceCollection();
         // 依存関係の登録を行う(以下コメントにて補足)
         // IUserRepositoryが要求されたらInMemoryUserRepositoryを生成して引き渡す(生成したインスタンスはその後使い回される)
-        serviceCollection.AddSingleton<IUserRepository, InMemoryUserRepository>();
-        // UserServiceが要求されたら都度UserServiceを生成して引き渡す
+        serviceCollection.AddSingleton<IUserRepository, InMemoryUserRepository>(); // UserRepositoryに差し替え
+        // serviceCollection.AddTransient<IUserRepository, UserRepository>();
+        // UserRegisterServiceがUserServiceから要求されるので登録しておく
         serviceCollection.AddTransient<UserService>();
+        // UserRegisterServiceが要求されたら都度UserServiceを生成して引き渡す
+        serviceCollection.AddTransient<UserRegisterService>();
         // UserApplicationServiceが要求されたら都度UserApplicationServiceを生成して引き渡す
         serviceCollection.AddTransient<UserApplicationService>();
         // 依存解決を行うプロバイダの生成
