@@ -3,6 +3,7 @@
 using Microsoft.Identity.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var fullName = new FullName("teruo", "kakikubo", "");
 Console.WriteLine(fullName.LastName); // kakikuboが表示される
@@ -122,11 +123,20 @@ var exceptionUserRegisterServcie = new ExceptionUserRegisterService();
 var exceptionClient = new Client(exceptionUserRegisterServcie);
 exceptionClient.Register("kkkb3"); // throwされる
 
-// ServiceLocatorを利用する
-ServiceLocator.Register<IUserRegisterService, InMemoryUserRepository>();
-// 変更したいときは以下のようにする
-// ServiceLocator.Register<IUserRegisterService, UserRepository>();
+static void Main(string[] args)
+{
+    // IoC Container
+    var serviceCollection = new ServiceCollection();
+    // 依存関係の設定を登録する
+    serviceCollection.AddTransient<IUserRepository, InMemoryUserRepository>();
+    serviceCollection.AddTransient<UserApplicationService>();
 
+    // インスタンスはIoC Container経由で取得する
+    var provider = serviceCollection.BuildServiceProvider();
+    var userApplicationService = provider.GetService<UserApplicationService>();
+
+
+}
 // ユーザ作成処理
 partial class Program
 {
