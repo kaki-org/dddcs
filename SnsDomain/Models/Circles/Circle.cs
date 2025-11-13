@@ -14,7 +14,7 @@ namespace SnsDomain.Models.Circles
             Owner = owner;
             Members = members;
         }
-
+        
         public CircleId Id { get; }
         public CircleName Name { get; private set; }
         public User Owner { get; private set; }
