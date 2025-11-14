@@ -1,4 +1,4 @@
-namespace SnsDomain.Models.Circles
+namespace SnsApplication.Circles
 {
     public class CircleApplicationService
     {

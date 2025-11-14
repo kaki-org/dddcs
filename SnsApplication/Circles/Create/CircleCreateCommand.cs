@@ -1,4 +1,4 @@
-namespace SnsDomain.Models.Circles
+namespace SnsApplication.Circles.Create
 {
     public class CircleCreateCommand(string userId, string name)
     {
