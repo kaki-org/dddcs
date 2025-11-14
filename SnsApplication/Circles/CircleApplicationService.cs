@@ -1,6 +1,7 @@
 using System.Transactions;
 using SnsApplication.Circles.Create;
 using SnsApplication.Circles.Join;
+using SnsDomain.Models.Circles;
 
 namespace SnsApplication.Circles
 {
