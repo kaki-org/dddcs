@@ -25,7 +25,7 @@ namespace SnsDomain.Models.Circles
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return ReferenceEquals((CircleName)obj);
+            return Equals((CircleName) obj);
         }
 
         public override int GetHashCode()
