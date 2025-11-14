@@ -1,3 +1,6 @@
+using System.Transactions;
+using SnsApplication.Circles.Create;
+
 namespace SnsApplication.Circles
 {
     public class CircleApplicationService
@@ -5,7 +8,7 @@ namespace SnsApplication.Circles
         private readonly ICircleFactory circleFactory;
         private readonly ICircleRepository circleRepository;
         private readonly CircleService circleService;
-        private readonly IUserRepositoy  userRepositoy;
+        private readonly IUserRepositoy  userRepository;
 
         public CircleApplicationService(
             ICircleFactory circleFactory,
@@ -17,7 +20,7 @@ namespace SnsApplication.Circles
             this.circleFactory = circleFactory;
             this.circleRepository = circleRepository;
             this.circleService = circleService;
-            this.userRepositoy = userRepository;
+            this.userRepository = userRepository;
         }
 
         public void Create(CircleCreateCommand command)
