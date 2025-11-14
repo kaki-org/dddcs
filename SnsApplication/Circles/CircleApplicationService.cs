@@ -75,7 +75,7 @@ namespace SnsApplication.Circles
 
                 // メンバーを追加する
                 circle.Members.Add(member);
-                circle.Repository.Save(circle);
+                circleRepository.Save(circle);
 
                 transaction.Complete();
             }
