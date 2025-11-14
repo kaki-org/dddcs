@@ -11,5 +11,5 @@ public class UserUpdateCommand
     /// <summary> データが設定されると変更される </summary>
     public string MailAddress { get; set; }
 
-    
+
 }

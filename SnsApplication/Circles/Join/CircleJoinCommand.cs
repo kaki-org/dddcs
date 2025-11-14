@@ -7,7 +7,7 @@ public class CircleJoinCommand
         UserId = userId;
         CircleId = circleId;
     }
-    
+
     public string UserId { get; }
     public string CircleId { get; }
 }

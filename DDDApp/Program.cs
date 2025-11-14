@@ -154,7 +154,7 @@ partial class Program
                 continue;
             }
 
-            var userRegisterService= serviceProvider.GetService<UserRegisterService>();
+            var userRegisterService = serviceProvider.GetService<UserRegisterService>();
             var command = new UserRegisterCommand(input);
             userRegisterService.Handle(command);
 
@@ -191,14 +191,14 @@ partial class Program
         serviceCollection.AddTransient<UserApplicationService>();
         // 依存解決を行うプロバイダの生成
         // プログラムはserviceProviderに依存の解決を依頼する
-        serviceProvider =  serviceCollection.BuildServiceProvider();
+        serviceProvider = serviceCollection.BuildServiceProvider();
     }
 
     public Program(IUserRepository userRepository)
     {
         this.userRepository = userRepository;
     }
-    
+
     public void CreateUser(string userName)
     {
         var user = new User(
@@ -206,13 +206,13 @@ partial class Program
             new UserName(userName),
             new MailAddress("program@example.com")
         );
-        
+
         var userService = new UserService(userRepository);
         if (userService.Exists(user))
         {
             throw new Exception($"{userName}は既に存在しています");
         }
-        
+
         userRepository.Save(user);
     }
 }

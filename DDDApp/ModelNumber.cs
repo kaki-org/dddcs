@@ -17,7 +17,7 @@ public class ModelNumber
 
     public override string ToString()
     {
-        return productCode + "-"  + branch + "-" + lot;
+        return productCode + "-" + branch + "-" + lot;
     }
 
 }

@@ -1,6 +1,6 @@
 using System;
 
-public class UserNotFoundException: Exception
+public class UserNotFoundException : Exception
 {
     public UserId UserId { get; }
 

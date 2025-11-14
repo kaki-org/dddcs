@@ -3,7 +3,7 @@ public class InMemoryUserRepository : IUserRepository
     // テストケースによってはデータを確認したいことがある
     // 確認のための操作を外部から行えるようにするためpublicにしている
     public Dictionary<UserId, User> Store { get; } = new Dictionary<UserId, User>();
-    
+
     public User Find(UserName userName)
     {
         var target = Store.Values.FirstOrDefault(user => userName.Equals(user.Name));
@@ -55,7 +55,7 @@ public class InMemoryUserRepository : IUserRepository
     {
         Store.Remove(user.Id);
     }
-    
+
     // ディープコピーを行うメソッド
     private User Clone(User user)
     {

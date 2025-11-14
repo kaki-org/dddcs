@@ -9,6 +9,6 @@ public class MailAddress
         Value = value;
     }
 
-    public string Value { get;  }
-    
+    public string Value { get; }
+
 }

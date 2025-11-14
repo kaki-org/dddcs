@@ -7,5 +7,5 @@ namespace SnsApplication.Circles.Create
     }
     
     public string UserId { get; }
-    public string Name { get; }
-}
+        public string Name { get; }
+    }
