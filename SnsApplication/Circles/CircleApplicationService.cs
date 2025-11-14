@@ -28,7 +28,7 @@ namespace SnsApplication.Circles
             using (var transaction = new TransactionScope())
             {
                 var ownerId = new UserId(command.UserId);
-                var owner = userRepository.Find(ownerId)
+                var owner = userRepository.Find(ownerId);
                 if (owner == null)
                 {
                     throw new UserNotFoundException(ownerId, "サークルのオーナーとなるユーザが見つかりませんでした。");
@@ -38,7 +38,7 @@ namespace SnsApplication.Circles
                 var circle = circleFactory.Create(name, owner);
                 if (circleService.Exists(circle))
                 {
-                    throw new CanNotRegisterCircleException(circle, "サークルはすでに存在しています")
+                    throw new CanNotRegisterCircleException(circle, "サークルはすでに存在しています");
                 }
 
                 circleRepository.Save(circle);
