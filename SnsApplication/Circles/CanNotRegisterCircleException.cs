@@ -1,3 +1,5 @@
+using SnsDomain.Models.Circles;
+
 namespace SnsApplication.Circles
 {
     class CanNotRegisterCircleException : Exception

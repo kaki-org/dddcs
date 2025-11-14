@@ -1,11 +1,16 @@
+using System.Windows.Input;
+using SnsDomain.Models.Users;
+
 namespace SnsApplication.Circles.Create
 {
-    public class CircleCreateCommand(string userId, string name)
+    public class CircleCreateCommand
     {
-        UserId = userId;
-        Name = name;
-    }
-    
-    public string UserId { get; }
+        public CircleCreateCommand(string userId, string name)
+        {
+            UserId = userId;
+            Name = name;
+        }
+        public string UserId { get; }
         public string Name { get; }
     }
+}

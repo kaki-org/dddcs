@@ -1,24 +1,25 @@
-namespace SnsDomain.Models.Users;
-
-public class User
+namespace SnsDomain.Models.Users
 {
-    public User(UserId id, UserName name)
+    public class User
     {
-        if (id == null) throw new ArgumentNullException(nameof(id));
-        if (name == null) throw new ArgumentNullException(nameof(name));
+        public User(UserId id, UserName name)
+        {
+            if (id == null) throw new ArgumentNullException(nameof(id));
+            if (name == null) throw new ArgumentNullException(nameof(name));
 
-        Id = id;
-        Name = name;
+            Id = id;
+            Name = name;
+        }
+
+        public UserId Id { get; }
+        public UserName Name { get; private set; }
+
+        public void ChangeName(UserName name)
+        {
+            if (name == null) throw new ArgumentNullException(nameof(name));
+
+            Name = name;
+        }
+
     }
-
-    public UserId Id { get; }
-    public UserName Name { get; private set; }
-
-    public void ChangeName(UserName name)
-    {
-        if (name == null) throw new ArgumentNullException(nameof(name));
-
-        Name = name;
-    }
-
 }

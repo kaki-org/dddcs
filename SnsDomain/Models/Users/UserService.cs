@@ -1,19 +1,21 @@
-namespace SnsDomain.Models.Users;
-
-public class UserService
+namespace SnsDomain.Models.Users
 {
-    private readonly IUserRepostiry userRepository;
-
-    public UserService(IUserRepository userRepository)
+    public class UserService
     {
-        this.userRepository = userRepository;
-    }
+        private readonly IUserRepository userRepository;
 
-    public bool Exists(User user)
-    {
-        var duplicatedUser = userRepository.Find(user.Name);
+        public UserService(IUserRepository userRepository)
+        {
+            this.userRepository = userRepository;
+        }
 
-        return duplicatedUser != null;
+        public bool Exists(User user)
+        {
+            var duplicatedUser = userRepository.Find(user.Name);
+
+            return duplicatedUser != null;
+        }
+
     }
 
 }

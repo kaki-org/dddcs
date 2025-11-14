@@ -1,3 +1,5 @@
+using SnsDomain.Models.Users;
+
 namespace SnsDomain.Models.Circles
 {
     public class Circle

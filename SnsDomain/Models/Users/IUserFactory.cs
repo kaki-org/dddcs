@@ -1,6 +1,7 @@
-namespace SnsDomain.Models.Users;
-
-public interface IUserFactory
+namespace SnsDomain.Models.Users
 {
-    User Create(UserName name);
+    public interface IUserFactory
+    {
+        User Create(UserName name);
+    }
 }

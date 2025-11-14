@@ -2,6 +2,7 @@ using System.Transactions;
 using SnsApplication.Circles.Create;
 using SnsApplication.Circles.Join;
 using SnsDomain.Models.Circles;
+using SnsDomain.Models.Users;
 
 namespace SnsApplication.Circles
 {
@@ -10,7 +11,7 @@ namespace SnsApplication.Circles
         private readonly ICircleFactory circleFactory;
         private readonly ICircleRepository circleRepository;
         private readonly CircleService circleService;
-        private readonly IUserRepositoy userRepository;
+        private readonly IUserRepository userRepository;
 
         public CircleApplicationService(
             ICircleFactory circleFactory,

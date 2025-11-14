@@ -1,10 +1,12 @@
-namespace SnsDomain.Models.Users;
-
-public interface IUserRepository
+namespace SnsDomain.Models.Users
 {
-    User Find(UserId id);
-    User Find(UserName name);
-    List<User> FindAll();
-    void Save(User user);
-    void Delete(User user);
+    public interface IUserRepository
+    {
+        User Find(UserId id);
+        User Find(UserName name);
+        List<User> FindAll();
+        void Save(User user);
+        void Delete(User user);
+    }
+
 }
