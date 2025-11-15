@@ -1,3 +1,7 @@
+using EFInfrastructure.Contexts;
+using EFInfrastructure.Persistence.DataModels;
+using SnsDomain.Models.Users;
+
 namespace EFInfrastructure.Persistence.Users
 {
     public class EFUserRepository
