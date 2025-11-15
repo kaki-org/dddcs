@@ -7,7 +7,7 @@ namespace EFInfrastructure.Persistence.DataModels
     public class UserDataModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        
+
         public string Id { get; set; }
         [Required]
         [MinLength(3)]

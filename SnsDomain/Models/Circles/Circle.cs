@@ -29,7 +29,7 @@ namespace SnsDomain.Models.Circles
         {
             return members.Count >= 29;
         }
-        
+
         public void Join(User member)
         {
             if (member == null) throw new ArgumentNullException(nameof(member));

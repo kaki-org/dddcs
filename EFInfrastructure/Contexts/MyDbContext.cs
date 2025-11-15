@@ -12,20 +12,20 @@ namespace EFInfrastructure.Contexts
             builder.UseSqlServer(ConfigurationManager.ConnectionStrings["FooConnection"].ConnectionString);
             var options = builder.Options;
             var context = new MyDbContext(options);
-        
+
             return context;
         }
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {
         }
-    
+
         public DbSet<UserDataModel> Users { get; set; }
-    
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-        
+
         }
     }
-    
-    
+
+
 }
