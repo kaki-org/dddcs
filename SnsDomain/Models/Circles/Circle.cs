@@ -8,8 +8,10 @@ namespace SnsDomain.Models.Circles
         private CircleName name;
         private User owner;
         // メンバーは非公開にできる
-        private List<User> members;
-        public Circle(CircleId id, CircleName name, User owner, List<User> members)
+        // private List<User> members;
+        // 識別子をインスタンスのかわりとして保持する
+        private List<UserId> members;
+        public Circle(CircleId id, CircleName name, User owner, List<UserId> members)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
             if (name == null) throw new ArgumentNullException(nameof(name));
@@ -24,21 +26,24 @@ namespace SnsDomain.Models.Circles
 
         public CircleId Id => id;
         public CircleName Name => name;
+        public User Owner => owner;
+        public List<UserId> Members => members;
 
         public bool IsFull()
         {
             return members.Count >= 29;
         }
 
-        public void Join(User member)
+        public void Join(User user)
         {
-            if (member == null) throw new ArgumentNullException(nameof(member));
+            if (user == null) throw new ArgumentNullException(nameof(user));
+
             if (IsFull())
             {
                 throw new CircleFullException(id);
             }
 
-            members.Add(member);
+            members.Add(user.Id);
         }
 
     }

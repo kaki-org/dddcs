@@ -3,30 +3,32 @@ namespace SnsDomain.Models.Users
     public class User
     {
         // インスタンス変数はいずれも非公開
-        private readonly UserId id;
-        private UserName name;
+        // private readonly UserId id;
+        // private UserName name;
+        public UserId Id { get; }
+        public UserName Name { get; private set; }
 
         public User(UserId id, UserName name)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
             if (name == null) throw new ArgumentNullException(nameof(name));
 
-            this.id = id;
-            this.name = name;
+            Id = id;
+            Name = name;
         }
 
         public void ChangeName(UserName name)
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
 
-            this.name = name;
+            Name = name;
         }
 
         public void Notify(IUserNotification note)
         {
             // 内部データを通知
-            note.Id(id);
-            note.Name(name);
+            note.Id(Id);
+            note.Name(Name);
         }
     }
 }
