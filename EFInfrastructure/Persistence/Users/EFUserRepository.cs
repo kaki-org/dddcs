@@ -30,12 +30,20 @@ namespace EFInfrastructure.Persistence.Users
 
         public void Save(User user)
         {
-            // ゲッターを利用しデータの詰め替えをしている
-            var userDataModel = new UserDataModel
-            {
-                Id = user.Id.Value,
-                Name = user.Name.Value
-            };
+            // // ゲッターを利用しデータの詰め替えをしている
+            // var userDataModel = new UserDataModel
+            // {
+            //     Id = user.Id.Value,
+            //     Name = user.Name.Value
+            // };
+
+            // 通知オブジェクトを引き渡して内部データを取得
+            var userDataModelBuilder = new UserDataModelBuilder();
+            user.Notify(userDataModelBuilder);
+
+            // 通知された内部データからデータモデルを生成
+            var userDataModel = userDataModelBuilder.Build();
+
             context.Users.Add(userDataModel);
             context.SaveChanges();
         }
