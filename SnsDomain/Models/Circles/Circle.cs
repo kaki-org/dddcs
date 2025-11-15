@@ -46,5 +46,11 @@ namespace SnsDomain.Models.Circles
             members.Add(user.Id);
         }
 
+        public void ChangeName(CircleName name)
+        {
+            if (name == null) throw new ArgumentNullException(nameof(name));
+
+            this.name = name;
+        }
     }
 }

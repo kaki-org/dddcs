@@ -2,6 +2,7 @@ using System.Transactions;
 using SnsApplication.Circles.Create;
 using SnsApplication.Circles.Invite;
 using SnsApplication.Circles.Join;
+using SnsApplication.Circles.Update;
 using SnsDomain.Models.CircleInvitations;
 using SnsDomain.Models.Circles;
 using SnsDomain.Models.Users;
@@ -77,6 +78,36 @@ namespace SnsApplication.Circles
                 transaction.Complete();
             }
         }
+
+        public void Update(CircleUpdateCommand command)
+        {
+            using (var transaction = new TransactionScope())
+            {
+                var id = new CircleId(command.Id);
+                // この時点でUserのインスタンスが再構築されるが
+                var circle = circleRepository.Find(id);
+                if (circle == null)
+                {
+                    throw new CircleNotFoundException(id);
+                }
+
+                if (command.Name != null)
+                {
+                    var name = new CircleName(command.Name);
+                    circle.ChangeName(name);
+                    if (circleService.Exists(circle))
+                    {
+                        throw new CanNotRegisterCircleException(circle, "サークルはすでに存在しています");
+                    }
+                }
+
+                circleRepository.Save(circle);
+
+                transaction.Complete();
+                // Userのインスタンスは使われることなく捨てられる
+            }
+        }
+
 
         public void Invite(CircleInviteCommand command)
         {
