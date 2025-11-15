@@ -70,14 +70,8 @@ namespace SnsApplication.Circles
                     throw new CircleNotFoundException(id, "サークルがみつかりませんでした");
                 }
 
-                // サークルのオーナー含めて30名か確認
-                if (circle.Members.Count >= 29)
-                {
-                    throw new CircleFullException(id);
-                }
-
                 // メンバーを追加する
-                circle.Members.Add(member);
+                circle.Join(member);
                 circleRepository.Save(circle);
 
                 transaction.Complete();
@@ -109,8 +103,8 @@ namespace SnsApplication.Circles
                     throw new CircleNotFoundException(circleId, "サークルが見つかりませんでした");
                 }
 
-                // サークルのオーナーを含めて30名か確認
-                if (circle.Members.Count >= 29)
+                // サークルのオーナーを含めて上限値かどうかを確認
+                if (circle.IsFull())
                 {
                     throw new CircleFullException(circleId);
                 }

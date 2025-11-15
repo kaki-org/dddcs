@@ -4,6 +4,11 @@ namespace SnsDomain.Models.Circles
 {
     public class Circle
     {
+        private readonly CircleId id;
+        private CircleName name;
+        private User owner;
+        // メンバーは非公開にできる
+        private List<User> members;
         public Circle(CircleId id, CircleName name, User owner, List<User> members)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
@@ -11,15 +16,30 @@ namespace SnsDomain.Models.Circles
             if (owner == null) throw new ArgumentNullException(nameof(owner));
             if (members == null) throw new ArgumentNullException(nameof(members));
 
-            Id = id;
-            Name = name;
-            Owner = owner;
-            Members = members;
+            this.id = id;
+            this.name = name;
+            this.owner = owner;
+            this.members = members;
         }
 
-        public CircleId Id { get; }
-        public CircleName Name { get; private set; }
-        public User Owner { get; private set; }
-        public List<User> Members { get; private set; }
+        public CircleId Id => id;
+        public CircleName Name => name;
+
+        public bool IsFull()
+        {
+            return members.Count >= 29;
+        }
+        
+        public void Join(User member)
+        {
+            if (member == null) throw new ArgumentNullException(nameof(member));
+            if (IsFull())
+            {
+                throw new CircleFullException(id);
+            }
+
+            members.Add(member);
+        }
+
     }
 }
