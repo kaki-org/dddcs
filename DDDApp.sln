@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnsDomain", "SnsDomain\SnsD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnsApplication", "SnsApplication\SnsApplication.csproj", "{EC429E69-5B08-431A-8CCF-0F2658050C3E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EFInfraStructure", "EFInfraStructure", "{84F6E757-6398-4428-A3F7-80ADF079BFD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFInfrastructure", "EFInfrastructure\EFInfrastructure.csproj", "{CB35F9B5-71EB-4D25-98E4-FD16B67DE875}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,5 +29,12 @@ Global
 		{EC429E69-5B08-431A-8CCF-0F2658050C3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC429E69-5B08-431A-8CCF-0F2658050C3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC429E69-5B08-431A-8CCF-0F2658050C3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB35F9B5-71EB-4D25-98E4-FD16B67DE875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB35F9B5-71EB-4D25-98E4-FD16B67DE875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB35F9B5-71EB-4D25-98E4-FD16B67DE875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB35F9B5-71EB-4D25-98E4-FD16B67DE875}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CB35F9B5-71EB-4D25-98E4-FD16B67DE875} = {84F6E757-6398-4428-A3F7-80ADF079BFD3}
 	EndGlobalSection
 EndGlobal
