@@ -2,6 +2,10 @@ namespace SnsDomain.Models.Users
 {
     public class User
     {
+        // インスタンス変数はいずれも非公開
+        public UserId Id { get; }
+        public UserName Name { get; private set; }
+
         public User(UserId id, UserName name)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
@@ -11,8 +15,6 @@ namespace SnsDomain.Models.Users
             Name = name;
         }
 
-        public UserId Id { get; }
-        public UserName Name { get; private set; }
 
         public void ChangeName(UserName name)
         {
