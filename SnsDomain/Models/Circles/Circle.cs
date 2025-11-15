@@ -31,7 +31,12 @@ namespace SnsDomain.Models.Circles
 
         public bool IsFull()
         {
-            return members.Count >= 29;
+            return CountMembers() >= 30;
+        }
+
+        public int CountMembers()
+        {
+            return members.Count + 1; // ownerの分をプラス1する
         }
 
         public void Join(User user)
