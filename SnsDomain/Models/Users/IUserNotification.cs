@@ -1,6 +1,6 @@
 namespace SnsDomain.Models.Users
 {
-    public interface IUseNotification
+    public interface IUserNotification
     {
         void Id(UserId id);
         void Name(UserName name);
