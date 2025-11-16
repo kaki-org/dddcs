@@ -57,18 +57,18 @@ namespace SnsApplication.Circles
         {
             using (var transaction = new TransactionScope())
             {
-                var memberId = new UserId(command.UserId);
-                var member = userRepository.Find(memberId);
-                if (member == null)
-                {
-                    throw new UserNotFoundException(memberId, "ユーザが見つかりませんでした。");
-                }
-
                 var circleId = new CircleId(command.CircleId);
                 var circle = circleRepository.Find(circleId);
                 if (circle == null)
                 {
                     throw new CircleNotFoundException(circleId, "サークルがみつかりませんでした");
+                }
+
+                var memberId = new UserId(command.UserId);
+                var member = userRepository.Find(memberId);
+                if (member == null)
+                {
+                    throw new UserNotFoundException(memberId, "ユーザが見つかりませんでした。");
                 }
 
                 // メンバーを追加する
