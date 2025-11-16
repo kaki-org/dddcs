@@ -64,11 +64,11 @@ namespace SnsApplication.Circles
                     throw new UserNotFoundException(memberId, "ユーザが見つかりませんでした。");
                 }
 
-                var id = new CircleId(command.CircleId);
-                var circle = circleRepository.Find(id);
+                var circleId = new CircleId(command.CircleId);
+                var circle = circleRepository.Find(circleId);
                 if (circle == null)
                 {
-                    throw new CircleNotFoundException(id, "サークルがみつかりませんでした");
+                    throw new CircleNotFoundException(circleId, "サークルがみつかりませんでした");
                 }
 
                 // メンバーを追加する
