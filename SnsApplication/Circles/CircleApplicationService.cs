@@ -4,6 +4,7 @@ using SnsApplication.Circles.Invite;
 using SnsApplication.Circles.Join;
 using SnsApplication.Circles.Update;
 using SnsDomain.Models.CircleInvitations;
+using SnsDomain.Models.CircleMembers;
 using SnsDomain.Models.Circles;
 using SnsDomain.Models.Users;
 
@@ -64,8 +65,13 @@ namespace SnsApplication.Circles
                     throw new CircleNotFoundException(circleId, "サークルがみつかりませんでした");
                 }
 
-                var circleFullSpecification = new CircleFullSpecification(userRepository);
-                if (circleFullSpecification.IsSatisfiedBy(circle))
+                // ファーストクラスコレクションに詰め替える処理
+                var owner = userRepository.Find(circle.Owner);
+                var members = userRepository.Find(circle.Members);
+                var circleMembers = new CircleMembers(circle.Id, owner, members);
+                var circleFullSpec = new CircleMembersFullSpecification();
+
+                if (circleFullSpec.IsSatisfiedBy(circleMembers))
                 {
                     throw new CircleFullException(circleId);
                 }

@@ -6,13 +6,13 @@ namespace SnsDomain.Models.Circles
     {
         private readonly CircleId id;
         private CircleName name;
-        private User owner;
+        private UserId owner;
         // メンバーは非公開にできる
         // private List<User> members;
         // 識別子をインスタンスのかわりとして保持する
         // プレミアムユーザの人数を探したいが保持しているのはUserIdのコレクションだけ
         private List<UserId> members;
-        public Circle(CircleId id, CircleName name, User owner, List<UserId> members)
+        public Circle(CircleId id, CircleName name, UserId owner, List<UserId> members)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
             if (name == null) throw new ArgumentNullException(nameof(name));
@@ -27,7 +27,7 @@ namespace SnsDomain.Models.Circles
 
         public CircleId Id => id;
         public CircleName Name => name;
-        public User Owner => owner;
+        public UserId Owner => owner;
         public List<UserId> Members => members;
 
         public bool IsFull()
