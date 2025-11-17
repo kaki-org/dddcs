@@ -10,6 +10,7 @@ namespace SnsDomain.Models.Circles
         // メンバーは非公開にできる
         // private List<User> members;
         // 識別子をインスタンスのかわりとして保持する
+        // プレミアムユーザの人数を探したいが保持しているのはUserIdのコレクションだけ
         private List<UserId> members;
         public Circle(CircleId id, CircleName name, User owner, List<UserId> members)
         {
@@ -34,6 +35,14 @@ namespace SnsDomain.Models.Circles
             return CountMembers() >= 30;
         }
 
+        // ユーザのリポジトリを受け取る?
+        public bool IsFull(IUserRepository userRepository)
+        {
+            var users = userRepository.Find(Members);
+            var premiumUserNumber = users.Count(user => user.IsPremium);
+            var circleUpperLimit = premiumUserNumber < 10 ? 30 : 50;
+            return CountMembers() >= circleUpperLimit;
+        }
         public int CountMembers()
         {
             return members.Count + 1; // ownerの分をプラス1する
