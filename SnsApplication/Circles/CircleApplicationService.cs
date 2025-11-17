@@ -64,20 +64,17 @@ namespace SnsApplication.Circles
                     throw new CircleNotFoundException(circleId, "サークルがみつかりませんでした");
                 }
 
+                var circleFullSpecification = new CircleFullSpecification(userRepository);
+                if (circleFullSpecification.IsSatisfiedBy(circle))
+                {
+                    throw new CircleFullException(circleId);
+                }
+
                 var memberId = new UserId(command.UserId);
                 var member = userRepository.Find(memberId);
                 if (member == null)
                 {
                     throw new UserNotFoundException(memberId, "ユーザが見つかりませんでした。");
-                }
-
-                var users = userRepository.Find(circle.Members);
-                // サークルに所属しているプレミアムユーザの人数により上限が変わる
-                var premiumUserNumber = users.Count(user => user.IsPremium);
-                var circleUpperLimit = premiumUserNumber < 10 ? 30 : 50;
-                if (circle.CountMembers() >= circleUpperLimit)
-                {
-                    throw new CircleFullException(circleId);
                 }
 
                 // メンバーを追加する

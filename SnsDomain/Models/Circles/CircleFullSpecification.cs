@@ -15,6 +15,7 @@ namespace SnsDomain.Models.Circles
         {
             var users = userRepository.Find(circle.Members);
             var premiumUserNumber = users.Count(user => user.IsPremium);
+            // サークルに所属しているプレミアムユーザの人数により上限が変わる
             var circleUpperLimit = premiumUserNumber < 10 ? 30 : 50;
             return circle.CountMembers() >= circleUpperLimit;
         }
