@@ -7,6 +7,7 @@ namespace SnsDomain.Models.Users
         List<User> FindAll();
         void Save(User user);
         void Delete(User user);
+        List<User> Find(List<UserId> circleMembers);
     }
 
 }

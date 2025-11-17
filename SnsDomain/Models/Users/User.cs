@@ -7,14 +7,16 @@ namespace SnsDomain.Models.Users
         // private UserName name;
         public UserId Id { get; }
         public UserName Name { get; private set; }
+        public bool IsPremium { get; private set; }
 
-        public User(UserId id, UserName name)
+        public User(UserId id, UserName name, bool isPremium = false)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
             if (name == null) throw new ArgumentNullException(nameof(name));
 
             Id = id;
             Name = name;
+            IsPremium = isPremium;
         }
 
         public void ChangeName(UserName name)
