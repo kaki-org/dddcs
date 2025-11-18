@@ -12,6 +12,7 @@ namespace SnsDomain.Models.Circles
         // 識別子をインスタンスのかわりとして保持する
         // プレミアムユーザの人数を探したいが保持しているのはUserIdのコレクションだけ
         private List<UserId> members;
+        private DateTime created;
         public Circle(CircleId id, CircleName name, UserId owner, List<UserId> members)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
@@ -29,6 +30,7 @@ namespace SnsDomain.Models.Circles
         public CircleName Name => name;
         public UserId Owner => owner;
         public List<UserId> Members => members;
+        public DateTime Created => created;
 
         public bool IsFull()
         {
