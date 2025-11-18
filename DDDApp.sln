@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{0AC9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.csproj", "{2AEC3774-B72B-4587-BA05-FD6C981EE3F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlInfrastructure", "SqlInfrastructure\SqlInfrastructure.csproj", "{0C1C5A1D-B8A5-4208-B641-32469A49C699}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{2AEC3774-B72B-4587-BA05-FD6C981EE3F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AEC3774-B72B-4587-BA05-FD6C981EE3F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AEC3774-B72B-4587-BA05-FD6C981EE3F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C1C5A1D-B8A5-4208-B641-32469A49C699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C1C5A1D-B8A5-4208-B641-32469A49C699}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C1C5A1D-B8A5-4208-B641-32469A49C699}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C1C5A1D-B8A5-4208-B641-32469A49C699}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CB35F9B5-71EB-4D25-98E4-FD16B67DE875} = {84F6E757-6398-4428-A3F7-80ADF079BFD3}
