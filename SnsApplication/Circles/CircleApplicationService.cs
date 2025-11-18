@@ -162,15 +162,9 @@ namespace SnsApplication.Circles
 
         public CircleGetRecommendResult GetRecommend(CircleGetRecommendRequest request)
         {
-            // リポジトリに依頼するのをやめる
-            // var recommendCircles = circleRepository.FindRecommended(now);
-            // 
-            // 仕様オブジェクトで解決する
-            var recommendCircleSpec = new CircleRecommendSpecification(now);
-
-            var circles = circleRepository.FindAll();
-            var recommendCircles = circles
-                .Where(recommendCircleSpec.IsSatisfiedBy)
+            var circleRecommendSpecification = new CircleRecommendSpecification(now);
+            // リポジトリに仕様を引き渡して抽出(フィルタリング)
+            var recommendCircles = circleRepository.Find(circleRecommendSpecification)
                 .Take(10)
                 .ToList();
 
