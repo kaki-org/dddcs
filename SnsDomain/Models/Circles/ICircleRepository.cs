@@ -5,5 +5,6 @@ namespace SnsDomain.Models.Circles
         void Save(Circle circle);
         Circle Find(CircleId id);
         Circle Find(CircleName name);
+        public List<Circle> FindRecommended(DateTime now);
     }
 }
