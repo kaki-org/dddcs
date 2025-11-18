@@ -20,5 +20,5 @@ namespace SnsDomain.Models.Circles
         }
 
     }
-    
+
 }

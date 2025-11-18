@@ -162,11 +162,19 @@ namespace SnsApplication.Circles
 
         public CircleGetRecommendResult GetRecommend(CircleGetRecommendRequest request)
         {
-            // リポジトリに依頼するだけ
-            var recommendCircles = circleRepository.FindRecommended(now);
+            // リポジトリに依頼するのをやめる
+            // var recommendCircles = circleRepository.FindRecommended(now);
+            //
+            // 仕様オブジェクトで解決する
+            var recommendCircleSpec = new CircleRecommendSpecification(now);
+
+            var circles = circleRepository.FindAll();
+            var recommendCircles = circles
+                .Where(recommendCircleSpec.IsSatisfiedBy)
+                .Take(10)
+                .ToList();
 
             return new CircleGetRecommendResult(recommendCircles);
-
         }
     }
 }
