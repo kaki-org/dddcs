@@ -164,7 +164,7 @@ namespace SnsApplication.Circles
         {
             // リポジトリに依頼するのをやめる
             // var recommendCircles = circleRepository.FindRecommended(now);
-            //
+            // 
             // 仕様オブジェクトで解決する
             var recommendCircleSpec = new CircleRecommendSpecification(now);
 
