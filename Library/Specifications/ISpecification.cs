@@ -1,6 +1,7 @@
-namespace DefaultNamespace;
-
-public interface ISpecification<T>
+namespace Library.Specifications
 {
-    public bool IsSatisfiedBy(T value);
+    public interface ISpecification<T>
+    {
+        public bool IsSatisfiedBy(T value);
+    }
 }

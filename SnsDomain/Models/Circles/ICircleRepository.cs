@@ -1,3 +1,5 @@
+using Library.Specifications;
+
 namespace SnsDomain.Models.Circles
 {
     public interface ICircleRepository
@@ -5,6 +7,6 @@ namespace SnsDomain.Models.Circles
         public void Save(Circle circle);
         public Circle Find(CircleId id);
         public Circle Find(CircleName name);
-        public List<Circle> FindAll();
+        public List<Circle> Find(ISpecification<Circle> specification);
     }
 }
