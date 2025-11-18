@@ -2,9 +2,9 @@ namespace SnsDomain.Models.Circles
 {
     public interface ICircleRepository
     {
-        void Save(Circle circle);
-        Circle Find(CircleId id);
-        Circle Find(CircleName name);
+        public void Save(Circle circle);
+        public Circle Find(CircleId id);
+        public Circle Find(CircleName name);
         public List<Circle> FindRecommended(DateTime now);
     }
 }
