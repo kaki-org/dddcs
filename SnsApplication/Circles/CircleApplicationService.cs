@@ -1,5 +1,6 @@
 using System.Transactions;
 using SnsApplication.Circles.Create;
+using SnsApplication.Circles.GetRecommend;
 using SnsApplication.Circles.Invite;
 using SnsApplication.Circles.Join;
 using SnsApplication.Circles.Update;
@@ -17,6 +18,7 @@ namespace SnsApplication.Circles
         private readonly CircleService circleService;
         private readonly IUserRepository userRepository;
         private readonly ICircleInvitationRepository circleInvitationRepository;
+        private readonly DateTime now;
 
         public CircleApplicationService(
             ICircleFactory circleFactory,
@@ -120,7 +122,6 @@ namespace SnsApplication.Circles
             }
         }
 
-
         public void Invite(CircleInviteCommand command)
         {
             using (var transaction = new TransactionScope())
@@ -157,6 +158,15 @@ namespace SnsApplication.Circles
                 transaction.Complete();
 
             }
+        }
+
+        public CircleGetRecommendResult GetRecommend(CircleGetRecommendRequest request)
+        {
+            // リポジトリに依頼するだけ
+            var recommendCircles = circleRepository.FindRecommended(now);
+
+            return new CircleGetRecommendResult(recommendCircles);
+
         }
     }
 }
