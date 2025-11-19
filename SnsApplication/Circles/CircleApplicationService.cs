@@ -1,6 +1,7 @@
 using System.Transactions;
 using SnsApplication.Circles.Create;
 using SnsApplication.Circles.GetRecommend;
+using SnsApplication.Circles.GetSummaries;
 using SnsApplication.Circles.Invite;
 using SnsApplication.Circles.Join;
 using SnsApplication.Circles.Update;
@@ -8,6 +9,7 @@ using SnsDomain.Models.CircleInvitations;
 using SnsDomain.Models.CircleMembers;
 using SnsDomain.Models.Circles;
 using SnsDomain.Models.Users;
+using CircleSummaryData = SnsApplication.Circles.GetSummaries.CircleSummaryData;
 
 namespace SnsApplication.Circles
 {
@@ -169,6 +171,26 @@ namespace SnsApplication.Circles
                 .ToList();
 
             return new CircleGetRecommendResult(recommendCircles);
+        }
+
+        public CircleGetSummariesResult GetSummaries(CircleGetSummariesCommand command)
+        {
+            // 全件取得して
+            var all = circleRepository.FindAll();
+            // その後にページング
+            var circles = all
+                .Skip((command.Page - 1) * command.Size)
+                .Take(command.Size);
+
+            var summaries = new List<CircleSummaryData>();
+            foreach (var circle in circles)
+            {
+                // サークルのオーナーを改めて検索
+                var owner = userRepository.Find(circle.Owner);
+                summaries.Add(new CircleSummaryData(circle.Id.Value, owner.Name.Value));
+            }
+
+            return new CircleGetSummariesResult(summaries);
         }
     }
 }
