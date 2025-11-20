@@ -26,13 +26,15 @@ namespace SnsApplication.Circles
             ICircleFactory circleFactory,
             ICircleRepository circleRepository,
             CircleService circleService,
-            IUserRepository userRepository
+            IUserRepository userRepository,
+            DateTime now
         )
         {
             this.circleFactory = circleFactory;
             this.circleRepository = circleRepository;
             this.circleService = circleService;
             this.userRepository = userRepository;
+            this.now = now;
         }
 
         public void Create(CircleCreateCommand command)
@@ -171,6 +173,25 @@ namespace SnsApplication.Circles
                 .ToList();
 
             return new CircleGetRecommendResult(recommendCircles);
+        }
+
+        public CircleGetSummariesResult GetSummaries(CircleGetSummariesCommand command)
+        {
+            // この段階ではデータを取得しない
+            var all = circleRepository.FindAll();
+            // ページング処理は条件を付与しているにすぎないためデータを取得しない
+            var chunk = all
+                .Skip((command.Page - 1) * command.Size)
+                .Take(command.Size);
+            // ここではじめてコレクションが処理されるため、条件に応じてデータ取得がされる
+            var summaries = chunk
+                .Select(x =>
+                {
+                    var owner = userRepository.Find(x.Owner);
+                    return new CircleSummaryData(x.Id.Value, owner.Name.Value);
+                })
+                .ToList();
+            return new CircleGetSummariesResult(summaries);
         }
     }
 }
